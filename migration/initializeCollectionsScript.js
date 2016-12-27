@@ -1,6 +1,7 @@
 "use strict"
 
 // TODO: Refactor to IFFE????
+var http = require("http");
 let config = require("./../config")
 let mongoose = require("mongoose");
 let firstWorkoutData = require("./data/workoutCollection");
