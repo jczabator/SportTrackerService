@@ -1,7 +1,7 @@
 "use strict"
 
-var mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+let mongoose  = require('mongoose');
+let Schema    = mongoose.Schema;
 
 let workoutSchema = new Schema({
   exerciseId: { type: Schema.Types.ObjectId, required: true, ref: "Exercise" },  
