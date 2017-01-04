@@ -6,14 +6,17 @@ let config = require("./config");
 let mongoose = require("mongoose");
 let express = require("express");
 let bodyParser = require("body-parser");
-let Workout = require("./model/workout");
+let morgan = require("morgan");
 
-// let User = require("./model/user");
-// let Exercise = require("./model/exercise");
+let Workout = require("./model/workout");
+let User = require("./model/user");
+let Exercise = require("./model/exercise");
+let LogService = require("./service/logService");
 
 let application = express();
 application.use(bodyParser.urlencoded({ extended: true }));
 application.use(bodyParser.json());
+application.use(morgan("combined"));
 
 let port = process.env.port || 8081;
 let router = express.Router();
@@ -21,7 +24,7 @@ let router = express.Router();
 mongoose.connect(config.connectionString);
 
 router.use(function (request, response, next) {
-  console.log("Something is happening");
+  //LogService.logApiCall(request.body, next.name);
   next();
 });
 
@@ -79,15 +82,15 @@ router.route("/workouts/:workout_id")
       })
     })
   })
-  .delete(function(request, response){
+  .delete(function (request, response) {
     Workout.remove({
       _id: request.params.workout_id
-    }, function(error, workout){
-      if(error){
+    }, function (error, workout) {
+      if (error) {
         response.send(error);
       }
 
-      response.json({message: "Successfully deleted"});
+      response.json({ message: "Successfully deleted" });
     })
   })
 
@@ -108,36 +111,4 @@ function mapRequest(request, workout) {
 application.use("/api", router);
 application.listen(port);
 
-console.log('Magic happens on port ' + port);
-
-
-// application.get('/listWorkouts', function (request, response) {  
-//   let db = mongoose.createConnection(config.connectionString);
-//   console.log("Mongo connected");
-//   db.on(
-//     'error',
-//     console.error.bind(console, 'connection error:')
-//   );
-
-//   db.once(
-//     'open', 
-//     function () {
-//       Workout = db.model("Workout"); 
-//       Workout.find(function (err, workouts) {
-//         if (err){
-//           return console.error(err);
-//         }
-//         console.log(workouts);
-//         response.send(workouts);
-//     })
-//   });  
-// })
-
-// var server = application.listen(8081, function () {
-
-//   var host = server.address().address
-//   var port = server.address().port
-
-//   console.log("Example app listening at http://%s:%s", host, port)
-
-// })
+console.log('SportTrackerService started at port: ' + port);
