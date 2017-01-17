@@ -1,8 +1,10 @@
 "use strict"
 
-let createWorkoutConverter = function () {
+const Workout = require("./../model/workout");
 
-  let convert = function (request, workout) {
+const createWorkoutConverter = function () {
+
+  const convert = function (request, workout) {
     if (workout == undefined) {
       workout = new Workout();
     }
@@ -19,6 +21,6 @@ let createWorkoutConverter = function () {
   };
 };
 
-let WorkoutConverter = createWorkoutConverter();
+const WorkoutConverter = createWorkoutConverter();
 module.exports = WorkoutConverter;
 

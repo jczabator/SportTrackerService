@@ -1,6 +1,7 @@
 "use strict"
 
 const WorkoutConverter = require("../converter/workoutConverter");
+const Workout = require("./../model/workout");
 
 //TODO: Change to const,
 
@@ -53,18 +54,18 @@ const createWorkoutService = function () {
         response.json({ message: "Workout updated!" });
       })
     });
+  };
 
-    const deleteWorkout = function (request, response) {
-      Workout.remove({
-        _id: request.params.workout_id
-      }, function (error, workout) {
-        if (error) {
-          response.send(error);
-        }
+  const deleteWorkout = function (request, response) {
+    Workout.remove({
+      _id: request.params.workout_id
+    }, function (error, workout) {
+      if (error) {
+        response.send(error);
+      }
 
-        response.json({ message: "Successfully deleted" });
-      })
-    }
+      response.json({ message: "Successfully deleted" });
+    });
   };
 
   return {

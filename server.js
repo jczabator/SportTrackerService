@@ -18,7 +18,7 @@ application.use(bodyParser.urlencoded({ extended: true }));
 application.use(bodyParser.json());
 application.use(morgan("combined"));
 
-let port = process.env.port || 8081;
+let port = process.env.port || 8082;
 let router = express.Router();
 
 mongoose.connect(config.connectionString);
@@ -29,13 +29,13 @@ router.use(function (request, response, next) {
 });
 
 router.route("/workouts")
-  .post(WorkoutService.createWorkout(requset, response))
-  .get(WorkoutService.getAllWorkouts(request, response));
+  .post(WorkoutService.createWorkout)
+  .get(WorkoutService.getAllWorkouts);
 
 router.route("/workouts/:workout_id")
-  .get(WorkoutService.getWorkout())
-  .put(WorkoutService.updateWorkout())
-  .delete(WorkoutService.deleteWorkout())
+  .get(WorkoutService.getWorkout)
+  .put(WorkoutService.updateWorkout)
+  .delete(WorkoutService.deleteWorkout)
 
 application.use("/api", router);
 application.listen(port);

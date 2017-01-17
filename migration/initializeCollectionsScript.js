@@ -1,22 +1,22 @@
 "use strict"
 
-// TODO: Refactor to IFFE????
+// TODO: Refactor to IFFE, move methods to generator.js
 
-let config = require("./../config")
-let mongoose = require("mongoose");
-let firstWorkoutData = require("./data/workoutCollection");
-let firstExerciseData = require("./data/exerciseCollection");
-let firstUserData = require("./data/userCollection");
-let User = require("./../model/user");
-let Workout = require("./../model/workout");
-let Exercise = require("./../model/exercise");
+const config = require("./../config")
+const mongoose = require("mongoose");
+const firstWorkoutData = require("./data/workoutCollection");
+const firstExerciseData = require("./data/exerciseCollection");
+const firstUserData = require("./data/userCollection");
+const User = require("./../model/user");
+const Workout = require("./../model/workout");
+const Exercise = require("./../model/exercise");
 
 
 mongoose.connect(config.connectionString);
 
-let firstExercise = createExercise(firstExerciseData);
-let firstUser = createUser(firstUserData);
-let firstWorkout = createWorkout(firstWorkoutData, firstExercise, firstUser);
+const firstExercise = createExercise(firstExerciseData);
+const firstUser = createUser(firstUserData);
+const firstWorkout = createWorkout(firstWorkoutData, firstExercise, firstUser);
 
 firstExercise.save(handleSave, "firstExercise");
 firstUser.save(handleSave, "firstUser");
@@ -34,7 +34,7 @@ function handleSave(error, modelName) {
 }
 
 function createExercise(firstExerciseData) {
-  let firstExercise = new Exercise({
+  const firstExercise = new Exercise({
     id: firstExerciseData.id,
     name: firstExerciseData.name
   });
@@ -43,7 +43,7 @@ function createExercise(firstExerciseData) {
 }
 
 function createUser(firstUserData) {
-  let firstUser = new User({
+  const firstUser = new User({
     "name": firstUserData.name,
     "userName": firstUserData.userName,
     "password": firstUserData.password,
@@ -55,7 +55,7 @@ function createUser(firstUserData) {
 }
 
 function createWorkout(firstWorkoutData, firstExercise, firstUser) {
-  let firstWorkout = new Workout({
+  const firstWorkout = new Workout({
     exerciseId: firstExercise._id,
     userId: firstUser._id,
     date: firstWorkoutData.date,
